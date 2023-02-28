@@ -6,6 +6,20 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
+    public static BoardManager Instance { get; private set;}
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     [Header("Block Bars")]
     public GameObject bottomBar = null;
     public GameObject sideBar = null;
@@ -20,6 +34,14 @@ public class BoardManager : MonoBehaviour
 
     float centerX = 0f;
     float centerY = 0f;
+
+    public static bool isDragging = false;
+
+    public int sourceIndex = -1;
+    public int targetIndex = -1;
+
+    [Header("Slots")]
+    public List<BoardSlot> slots = new List<BoardSlot>();
 
     private void Start()
     {
@@ -61,7 +83,9 @@ public class BoardManager : MonoBehaviour
     {
         float offsetX = (float)(cols - 1) / 2 * (tileSize + spacing);
         float offsetY = (float)(rows - 1) / 2 * (tileSize + spacing);
-        
+
+        int index = 0;
+
         for(int i = 0; i < rows; i++)
         {
             for(int j = 0; j < cols; j++)
@@ -72,9 +96,42 @@ public class BoardManager : MonoBehaviour
                 float posY = i * (tileSize + spacing) - offsetY + transform.position.y;
 
                 slot.transform.position = new Vector3(posX, posY, 0);
-                blockSlot.GetComponent<BoardSlot>().SetData(defaultData);
-                blockSlot.GetComponent<BoardSlot>().Toggle(true);
+                slot.GetComponent<BoardSlot>().SetData(defaultData);
+                slot.GetComponent<BoardSlot>().Toggle(true);
+                slot.GetComponent<BoardSlot>().SetIndex(index);
+                index++;
+                slots.Add(slot.GetComponent<BoardSlot>());
             }
         }
+    }
+
+    private void RefreshBoard()
+    {
+        
+    }
+
+    public void StartDragging(int source)
+    {
+        isDragging = true;
+        sourceIndex = source;
+    }
+
+    public void SetTarget(int target)
+    {
+        targetIndex = target;
+    }  
+    
+    public bool Swap()
+    {
+        if ((sourceIndex != -1 && targetIndex != -1) || (sourceIndex != targetIndex))
+        {
+            BlockData temp = slots[sourceIndex].blockData;
+            slots[sourceIndex].SetData(slots[targetIndex].blockData);
+            slots[targetIndex].SetData(temp);
+            targetIndex = -1;
+            sourceIndex = -1;
+            return true;
+        }
+        return false;
     }
 }

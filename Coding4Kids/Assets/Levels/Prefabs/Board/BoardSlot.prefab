@@ -187,6 +187,7 @@ MonoBehaviour:
   blockData: {fileID: 11400000, guid: 50e2c2565991fd34cb1519825a7f2bab, type: 2}
   active: {fileID: 7454035554590349815}
   image: {fileID: 7454035552485348950}
+  index: 0
 --- !u!61 &-7861706189573189986
 BoxCollider2D:
   m_ObjectHideFlags: 0

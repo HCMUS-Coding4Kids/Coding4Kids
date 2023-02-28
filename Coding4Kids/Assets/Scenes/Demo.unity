@@ -365,10 +365,13 @@ MonoBehaviour:
   bottomBar: {fileID: 111717883}
   sideBar: {fileID: 0}
   blockSlot: {fileID: 7454035553028832317, guid: 33ded10eed7b1f44dbb4ecdad308796f, type: 3}
-  defaultData: {fileID: 11400000, guid: 50e2c2565991fd34cb1519825a7f2bab, type: 2}
+  defaultData: {fileID: 0}
   rows: 6
   cols: 12
   spacing: 0.2
+  sourceIndex: 0
+  targetIndex: 0
+  slots: []
 --- !u!212 &1031272695
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -409,7 +412,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 0}
   m_FlipX: 0
