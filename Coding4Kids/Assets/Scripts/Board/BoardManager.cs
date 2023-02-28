@@ -125,8 +125,6 @@ public class BoardManager : MonoBehaviour
     {
         if (sourceIndex != -1 && targetIndex != -1 && (sourceIndex != targetIndex))
         {
-            Debug.Log(targetIndex);
-            Debug.Log(sourceIndex);
             BlockData temp = slots[sourceIndex].blockData;
             slots[sourceIndex].SetData(slots[targetIndex].blockData);
             slots[targetIndex].SetData(temp);
