@@ -41,6 +41,14 @@ public class BoardSlot : MonoBehaviour
         }    
     }
 
+    public void OnMouseExit()
+    {
+        if (BoardManager.isDragging)
+        {
+            BoardManager.Instance.SetTarget(-1);
+        }
+    }
+
     public void OnMouseDown()
     {
         Toggle(false);
