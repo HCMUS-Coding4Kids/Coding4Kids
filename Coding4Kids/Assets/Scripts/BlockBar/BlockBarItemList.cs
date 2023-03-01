@@ -33,4 +33,17 @@ public class BlockBarItemList : MonoBehaviour
             }
         }
     }
+
+    public void Remove(BlockData data)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (data == items[i].blockData)
+            {
+                items[i].count--;
+                UIBlockBar.Instance.UpdateBar();
+                return;
+            }
+        }
+    }
 }

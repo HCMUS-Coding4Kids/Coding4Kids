@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-    public static BoardManager Instance { get; private set;}
+    public static BoardManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -36,6 +36,7 @@ public class BoardManager : MonoBehaviour
     float centerY = 0f;
 
     public static bool isDragging = false;
+    public static BlockData draggingData = null;
 
     public int sourceIndex = -1;
     public int targetIndex = -1;
@@ -47,7 +48,15 @@ public class BoardManager : MonoBehaviour
     {
         GetCenterPoint();
         GenerateGrid();
+        ResetSwap();
     }
+
+    private void ResetSwap()
+    {
+        sourceIndex = -1;
+        targetIndex = -1;
+    }
+
     private void GetCenterPoint()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2f; //10
@@ -114,6 +123,7 @@ public class BoardManager : MonoBehaviour
     {
         isDragging = true;
         sourceIndex = source;
+        draggingData = slots[sourceIndex].blockData;
     }
 
     public void SetTarget(int target)
@@ -123,15 +133,37 @@ public class BoardManager : MonoBehaviour
     
     public bool Swap()
     {
+        isDragging = false;
         if (sourceIndex != -1 && targetIndex != -1 && (sourceIndex != targetIndex))
         {
             BlockData temp = slots[sourceIndex].blockData;
             slots[sourceIndex].SetData(slots[targetIndex].blockData);
             slots[targetIndex].SetData(temp);
+            //slots[targetIndex].SetBlur(false);
             targetIndex = -1;
             sourceIndex = -1;
             return true;
         }
         return false;
+    }
+
+    public bool Swap(BlockData data)
+    {
+        isDragging = false;
+
+        if (targetIndex == -1)
+        {
+            return false;
+        }
+
+        if (slots[targetIndex].blockData != null)
+        {
+            BlockBarItemList.Instance.Add(slots[targetIndex].blockData);
+        }
+
+        slots[targetIndex].SetData(data);
+        //slots[targetIndex].SetBlur(false);
+        targetIndex = -1;
+        return true;
     }
 }

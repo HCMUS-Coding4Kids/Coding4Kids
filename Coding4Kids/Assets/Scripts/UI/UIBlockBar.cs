@@ -24,12 +24,14 @@ public class UIBlockBar : MonoBehaviour
 
     private void Start()
     {
+        int index = 0;
         foreach (BlockBarItem item in BlockBarItemList.Instance.items)
         {
             GameObject newBlock = Instantiate(blockPrefab);
             newBlock.transform.SetParent(blockBar.transform);
             UIBlock uiBlock = newBlock.GetComponent<UIBlock>();
-            uiBlock.Init(item.blockData);
+            uiBlock.Init(item.blockData, index);
+            index++;
             blocks.Add(uiBlock);
         }
         UpdateBar();

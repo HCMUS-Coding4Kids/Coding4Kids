@@ -5,11 +5,17 @@ using UnityEngine;
 public class BoardSlot : MonoBehaviour
 {
     bool isActive = false;
+    public int index;
     public BlockData blockData = null;
+
+    [Header("Graphic Elements")]
     public GameObject active;
     public GameObject image;
+    public GameObject blur;
 
-    public int index;
+    BlockData originalData = null;
+    bool isBlurred = true;
+
     float currentTime;
     bool isDragging = false;
 
@@ -18,6 +24,7 @@ public class BoardSlot : MonoBehaviour
     private void Start()
     {
         Toggle(false);
+        SetBlur(false);
     }
 
     private void Update()
@@ -38,6 +45,11 @@ public class BoardSlot : MonoBehaviour
         if(BoardManager.isDragging)
         {
             BoardManager.Instance.SetTarget(index);
+            /*blockData = BoardManager.draggingData;
+            if (!isBlurred)
+            {
+                SetBlur(true);
+            }*/
         }    
     }
 
@@ -46,7 +58,18 @@ public class BoardSlot : MonoBehaviour
         if (BoardManager.isDragging)
         {
             BoardManager.Instance.SetTarget(-1);
+            /*blockData = originalData;
+            if (isBlurred)
+            {
+                SetBlur(false);
+            }*/
         }
+    }
+
+    public void SetBlur(bool value)
+    {
+        blur.SetActive(value);
+        isBlurred = value;
     }
 
     public void OnMouseDown()

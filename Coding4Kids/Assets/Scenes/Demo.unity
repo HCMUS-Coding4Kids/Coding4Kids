@@ -975,13 +975,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - blockData: {fileID: 11400000, guid: 80ef8adccf76d6a4ba55116702199972, type: 2}
-    count: 2
+    count: 10
   - blockData: {fileID: 11400000, guid: 06e49d6caab46a84cb24ca7e61b8e3fc, type: 2}
-    count: 2
+    count: 10
   - blockData: {fileID: 11400000, guid: 50e2c2565991fd34cb1519825a7f2bab, type: 2}
-    count: 2
+    count: 10
   - blockData: {fileID: 11400000, guid: 1a25bdfcb214b80498ad88723f261edd, type: 2}
-    count: 2
+    count: 10
 --- !u!114 &2139325143
 MonoBehaviour:
   m_ObjectHideFlags: 0
