@@ -13,7 +13,7 @@ public class BoardSlot : MonoBehaviour
     public GameObject image;
     public GameObject blur;
 
-    BlockData originalData = null;
+    //BlockData originalData = null;
     bool isBlurred = true;
 
     float currentTime;
@@ -42,7 +42,7 @@ public class BoardSlot : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        if(BoardManager.isDragging)
+        if(GameManager.isDragging)
         {
             BoardManager.Instance.SetTarget(index);
             /*blockData = BoardManager.draggingData;
@@ -55,7 +55,7 @@ public class BoardSlot : MonoBehaviour
 
     public void OnMouseExit()
     {
-        if (BoardManager.isDragging)
+        if (GameManager.isDragging)
         {
             BoardManager.Instance.SetTarget(-1);
             /*blockData = originalData;

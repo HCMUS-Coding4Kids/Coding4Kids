@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -54,17 +55,20 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             eventData.pointerDrag = null;
             return;
         }
-        BoardManager.isDragging = true;
+        GameManager.isDragging = true;
         BoardManager.draggingData = blockData;
         tempBlock = Instantiate(available, transform.parent.transform.parent);
+        Canvas canvas = tempBlock.transform.AddComponent<Canvas>();
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 100;
         BlockBarItemList.Instance.Remove(blockData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(tempBlock);
-        BoardManager.isDragging = false;
-        BoardManager.Instance.Swap(blockData);
+        GameManager.isDragging = false;
+        SideBarManager.Instance.Add(blockData);
     }
 
     public void OnDrag(PointerEventData eventData)

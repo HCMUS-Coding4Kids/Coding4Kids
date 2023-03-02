@@ -35,7 +35,6 @@ public class BoardManager : MonoBehaviour
     float centerX = 0f;
     float centerY = 0f;
 
-    public static bool isDragging = false;
     public static BlockData draggingData = null;
 
     public int sourceIndex = -1;
@@ -121,7 +120,7 @@ public class BoardManager : MonoBehaviour
 
     public void StartDragging(int source)
     {
-        isDragging = true;
+        GameManager.isDragging = true;
         sourceIndex = source;
         draggingData = slots[sourceIndex].blockData;
     }
@@ -133,7 +132,7 @@ public class BoardManager : MonoBehaviour
     
     public bool Swap()
     {
-        isDragging = false;
+        GameManager.isDragging = false;
         if (sourceIndex != -1 && targetIndex != -1 && (sourceIndex != targetIndex))
         {
             BlockData temp = slots[sourceIndex].blockData;
@@ -149,7 +148,7 @@ public class BoardManager : MonoBehaviour
 
     public bool Swap(BlockData data)
     {
-        isDragging = false;
+        GameManager.isDragging = false;
 
         if (targetIndex == -1)
         {
