@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class FunctionSlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public static SlotManager Instance { get; private set; }
+    public static FunctionSlotManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -22,23 +22,14 @@ public class SlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public Transform topY = null;
     public Transform bottomY = null;
-    public Transform middleY = null;
-
-    private void Start()
-    {
-        if(SideBarManager.Instance.hasFunction)
-        {
-            bottomY = middleY;
-        }
-    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SideBarManager.Instance.SetEnterSlot(true);
+        SideBarManager.Instance.SetEnterFunction(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        SideBarManager.Instance.SetEnterSlot(false);
+         SideBarManager.Instance.SetEnterFunction(false);
     }
 }

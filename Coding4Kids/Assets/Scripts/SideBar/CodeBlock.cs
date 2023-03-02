@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerExitHandler
 {
+    public enum Parent
+    {
+        None, Function
+    }
     public BlockData blockData;
+    public Parent parent = Parent.None;
 
     [Header("UI Elements")]
     public Image image;
@@ -74,13 +79,25 @@ public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandle
     public void OnDrag(PointerEventData eventData)
     {
         float posY = Input.mousePosition.y;
-        if(posY > SlotManager.Instance.topY.transform.position.y)
+        float topY = 0f;
+        float bottomY = 0f;
+        if (parent == Parent.Function)
         {
-            posY = SlotManager.Instance.topY.transform.position.y;
+            topY = FunctionSlotManager.Instance.topY.position.y;
+            bottomY = FunctionSlotManager.Instance.bottomY.position.y;
+        } 
+        else
+        {
+            topY = SlotManager.Instance.topY.position.y;
+            bottomY = SlotManager.Instance.bottomY.position.y;
+        }
+        if(posY > topY)
+        {
+            posY = topY;
             SideBarManager.targetIndex = 0;
-        } else if (posY < SlotManager.Instance.bottomY.transform.position.y)
+        } else if (posY < bottomY)
         {
-            posY = SlotManager.Instance.bottomY.transform.position.y;
+            posY = bottomY;
             SideBarManager.targetIndex = transform.parent.childCount - 1;
         }
         transform.position = new Vector3(transform.position.x, posY, 0f);
