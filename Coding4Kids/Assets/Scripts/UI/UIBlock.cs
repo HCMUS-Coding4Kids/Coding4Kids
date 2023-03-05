@@ -13,6 +13,7 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     [Header("UI Elements")]
     public Image image;
+    public Image background;
     public GameObject available;
     public GameObject unavailable;
     public TextMeshProUGUI countText;
@@ -41,6 +42,12 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         this.index = index;
         this.blockData = blockData;
         image.sprite = blockData.thumbnail;
+        background.color = blockData.backgroundColor;
+        if(blockData.type == BlockData.Type.Color)
+        {
+            ColorBlockData colorBlockData = (ColorBlockData)blockData;
+            image.color = colorBlockData.colorPalete;
+        }
     }
 
     private void SetAvailable(bool available)

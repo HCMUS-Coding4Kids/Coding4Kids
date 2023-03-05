@@ -8,9 +8,10 @@ public class BlockData : ScriptableObject
     [TextArea(5, 20)]
     public string description;
     public Sprite thumbnail;
+    public Color backgroundColor;
     public enum Type
     {
-        None, Directional
+        None, Directional, Color, Function
     }
 
     public Type type;

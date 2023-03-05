@@ -56,27 +56,31 @@ public class SideBarManager : MonoBehaviour
 
     public void Add(BlockData data)
     {
-        if (enterFunctionSlot) {
-            GameObject newCodeBlock = Instantiate(codeBlockPrefab, funcBlockHolder);
-            newCodeBlock.GetComponent<CodeBlock>().blockData = data;
-            if (targetIndex != -1)
-            {
-                newCodeBlock.transform.SetSiblingIndex(targetIndex);
-            }
-            enterFunctionSlot = false;
-            newCodeBlock.GetComponent<CodeBlock>().parent = CodeBlock.Parent.Function;
-            return;
-        }
-        if(enterSlot)
+        Transform targetHolder = null;
+        if (enterFunctionSlot)
         {
-            GameObject newCodeBlock = Instantiate(codeBlockPrefab, blockHolder);
-            newCodeBlock.GetComponent<CodeBlock>().blockData = data;
-            if(targetIndex != -1)
-            {
-                newCodeBlock.transform.SetSiblingIndex(targetIndex);
-            }
+            targetHolder = funcBlockHolder;
+            enterFunctionSlot = false;
+        }
+        else
+        {
+            targetHolder = blockHolder;
             enterSlot = false;
         }
+
+        GameObject newCodeBlock = Instantiate(codeBlockPrefab, targetHolder);
+        newCodeBlock.GetComponent<CodeBlock>().blockData = data;
+        newCodeBlock.GetComponent<CodeBlock>().background.color = data.backgroundColor;
+        if(data.type == BlockData.Type.Color)
+        {
+            ColorBlockData colorBlockData = (ColorBlockData) data;
+            newCodeBlock.GetComponent<CodeBlock>().image.color = colorBlockData.colorPalete;
+        }    
+        if (targetIndex != -1)
+        {
+            newCodeBlock.transform.SetSiblingIndex(targetIndex);
+        }
+        newCodeBlock.GetComponent<CodeBlock>().parent = (targetHolder == funcBlockHolder) ? CodeBlock.Parent.Function : CodeBlock.Parent.None;
     }
 
     

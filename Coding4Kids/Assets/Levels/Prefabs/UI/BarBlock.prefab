@@ -55,6 +55,7 @@ MonoBehaviour:
   index: -1
   blockData: {fileID: 0}
   image: {fileID: 6213560141089469979}
+  background: {fileID: 64175593980082614}
   available: {fileID: 5318445353893802483}
   unavailable: {fileID: 7303216129202049598}
   countText: {fileID: 64175593938501625}

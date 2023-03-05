@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   thumbnail: {fileID: 21300000, guid: 927a49d452aab7a4882980027a371494, type: 3}
+  backgroundColor: {r: 1, g: 0.9372549, b: 0.46666667, a: 1}
   type: 1
   direction: 0

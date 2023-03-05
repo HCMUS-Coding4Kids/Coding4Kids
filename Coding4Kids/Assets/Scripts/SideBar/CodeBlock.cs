@@ -16,6 +16,7 @@ public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandle
     [Header("UI Elements")]
     public Image image;
     public Image highlight;
+    public Image background;
 
     float currentTime = 0f;
     Vector3 originalPosition;

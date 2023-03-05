@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91ef404682c507c4ab0a0b47156707e2, type: 3}
-  m_Name: Down
+  m_Script: {fileID: 11500000, guid: 2fd969bfa5d95cf429983916118558bd, type: 3}
+  m_Name: Orange
   m_EditorClassIdentifier: 
   description: 
-  thumbnail: {fileID: 21300000, guid: 0903e0220641f744db047bafba0df6af, type: 3}
-  backgroundColor: {r: 1, g: 0.9372549, b: 0.46666667, a: 1}
-  type: 1
-  direction: 1
+  thumbnail: {fileID: 21300000, guid: 552aacc0b9e88e14bafefc4da5fee65d, type: 3}
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  type: 2
+  color: 1
+  colorPalete: {r: 1, g: 0.50728744, b: 0, a: 1}
