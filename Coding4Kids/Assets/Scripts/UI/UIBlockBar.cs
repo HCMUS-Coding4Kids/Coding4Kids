@@ -29,6 +29,7 @@ public class UIBlockBar : MonoBehaviour
         {
             GameObject newBlock = Instantiate(blockPrefab);
             newBlock.transform.SetParent(blockBar.transform);
+            newBlock.transform.localScale = Vector3.one;
             UIBlock uiBlock = newBlock.GetComponent<UIBlock>();
             uiBlock.Init(item.blockData, index);
             index++;

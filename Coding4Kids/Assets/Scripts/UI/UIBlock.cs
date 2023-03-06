@@ -63,7 +63,7 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
         }
         GameManager.isDragging = true;
-        BoardManager.draggingData = blockData;
+        DraggableBoard.draggingData = blockData;
         tempBlock = Instantiate(available, transform.parent.transform.parent);
         Canvas canvas = tempBlock.transform.AddComponent<Canvas>();
         canvas.overrideSorting = true;

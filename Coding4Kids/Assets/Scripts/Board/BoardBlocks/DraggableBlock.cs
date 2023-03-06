@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardSlot : MonoBehaviour
+public class DraggableBlock : BoardBlock
 {
     bool isActive = false;
-    public int index;
-    public BlockData blockData = null;
 
     [Header("Graphic Elements")]
-    public GameObject active;
-    public GameObject image;
-    public GameObject blur;
+    GameObject active;
+    GameObject image;
+    GameObject blur;
 
     //BlockData originalData = null;
     bool isBlurred = true;
@@ -35,16 +33,11 @@ public class BoardSlot : MonoBehaviour
         }
     }
 
-    public void SetIndex(int index)
-    {
-        this.index = index;
-    }
-
     public void OnMouseEnter()
     {
         if(GameManager.isDragging)
         {
-            BoardManager.Instance.SetTarget(index);
+            DraggableBoard.Instance.SetTarget(index);
             /*blockData = BoardManager.draggingData;
             if (!isBlurred)
             {
@@ -57,7 +50,7 @@ public class BoardSlot : MonoBehaviour
     {
         if (GameManager.isDragging)
         {
-            BoardManager.Instance.SetTarget(-1);
+            DraggableBoard.Instance.SetTarget(-1);
             /*blockData = originalData;
             if (isBlurred)
             {
@@ -91,7 +84,7 @@ public class BoardSlot : MonoBehaviour
         else if (isDragging)
         {
             isDragging = false;
-            if(!BoardManager.Instance.Swap())
+            if(!DraggableBoard.Instance.Swap())
             {
                 Toggle(true);
             }
@@ -112,7 +105,7 @@ public class BoardSlot : MonoBehaviour
             tempImage.GetComponent<SpriteRenderer>().sortingOrder += 10;
             Toggle(false);
             isDragging = true;
-            BoardManager.Instance.StartDragging(index);
+            DraggableBoard.Instance.StartDragging(index);
         }
         if (temp != null)
         {
@@ -121,14 +114,14 @@ public class BoardSlot : MonoBehaviour
     }
 
 
-    public void Toggle(bool value)
+    public override void Toggle(bool value)
     {
         isActive = value;
         active.SetActive(value);
         image.SetActive(value);
     }
 
-    public void UpdateBlock()
+    public override void UpdateBlock()
     {
         if (blockData != null)
         {
@@ -141,7 +134,7 @@ public class BoardSlot : MonoBehaviour
         }
     }
 
-    public void SetData(BlockData data)
+    public override void SetData(BlockData data)
     {
         blockData = data;
         UpdateBlock();

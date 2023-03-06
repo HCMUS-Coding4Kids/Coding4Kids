@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class BoardManager : MonoBehaviour
+public class Board : MonoBehaviour
 {
-    public static BoardManager Instance { get; private set; }
+    public static Board Instance { get; private set; }
 
     private void Awake()
     {
@@ -32,31 +32,25 @@ public class BoardManager : MonoBehaviour
     public float spacing = 1f;
     float tileSize = 1f;
 
+    [Header("Example Board")]
+    public bool useExampleBoard = false;
+    public GameObject exampleBoard;
+    public float exampleScale = 0.5f;
+
     float centerX = 0f;
     float centerY = 0f;
 
-    public static BlockData draggingData = null;
-
-    public int sourceIndex = -1;
-    public int targetIndex = -1;
-
     [Header("Slots")]
-    public List<BoardSlot> slots = new List<BoardSlot>();
+    public List<BoardBlock> slots = new List<BoardBlock>();
+    public List<BoardBlock> exampleSlots = new List<BoardBlock>();
 
     private void Start()
     {
         GetCenterPoint();
         GenerateGrid();
-        ResetSwap();
     }
 
-    private void ResetSwap()
-    {
-        sourceIndex = -1;
-        targetIndex = -1;
-    }
-
-    private void GetCenterPoint()
+    protected void GetCenterPoint()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2f; //10
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width; //17.(7)8
@@ -87,7 +81,7 @@ public class BoardManager : MonoBehaviour
         transform.position = new Vector3(centerX, centerY, 0);
     }
 
-    private void GenerateGrid()
+    protected void GenerateGrid()
     {
         float offsetX = (float)(cols - 1) / 2 * (tileSize + spacing);
         float offsetY = (float)(rows - 1) / 2 * (tileSize + spacing);
@@ -104,65 +98,39 @@ public class BoardManager : MonoBehaviour
                 float posY = i * (tileSize + spacing) - offsetY + transform.position.y;
 
                 slot.transform.position = new Vector3(posX, posY, 0);
-                slot.GetComponent<BoardSlot>().SetData(defaultData);
-                slot.GetComponent<BoardSlot>().Toggle(true);
-                slot.GetComponent<BoardSlot>().SetIndex(index);
+                slot.GetComponent<BoardBlock>().SetData(defaultData);
+                slot.GetComponent<BoardBlock>().Toggle(true);
+                slot.GetComponent<BoardBlock>().SetIndex(index);
                 index++;
-                slots.Add(slot.GetComponent<BoardSlot>());
+                slots.Add(slot.GetComponent<BoardBlock>());
             }
         }
     }
 
-    private void RefreshBoard()
+    protected void GenerateExampleBoard()
     {
-        
-    }
-
-    public void StartDragging(int source)
-    {
-        GameManager.isDragging = true;
-        sourceIndex = source;
-        draggingData = slots[sourceIndex].blockData;
-    }
-
-    public void SetTarget(int target)
-    {
-        targetIndex = target;
-    }  
-    
-    public bool Swap()
-    {
-        GameManager.isDragging = false;
-        if (sourceIndex != -1 && targetIndex != -1 && (sourceIndex != targetIndex))
+        if(!useExampleBoard)
         {
-            BlockData temp = slots[sourceIndex].blockData;
-            slots[sourceIndex].SetData(slots[targetIndex].blockData);
-            slots[targetIndex].SetData(temp);
-            //slots[targetIndex].SetBlur(false);
-            targetIndex = -1;
-            sourceIndex = -1;
-            return true;
-        }
-        return false;
-    }
-
-    public bool Swap(BlockData data)
-    {
-        GameManager.isDragging = false;
-
-        if (targetIndex == -1)
-        {
-            return false;
+            return;
         }
 
-        if (slots[targetIndex].blockData != null)
+        for(int i = 0; i < transform.childCount; i++)
         {
-            BlockBarItemList.Instance.Add(slots[targetIndex].blockData);
+            if(transform.GetChild(i)!= exampleBoard.transform)
+            {
+                GameObject temp = Instantiate(transform.GetChild(i).gameObject, exampleBoard.transform);
+                BoardBlock tempBlock = temp.GetComponent<BoardBlock>();
+                if (tempBlock != null)
+                {
+                    exampleSlots.Add(tempBlock);
+                }
+            }
         }
 
-        slots[targetIndex].SetData(data);
-        //slots[targetIndex].SetBlur(false);
-        targetIndex = -1;
-        return true;
+        exampleBoard.transform.localScale = Vector3.one * exampleScale;
+        float boardWidth = cols + (cols - 1) * spacing;
+        float spacingBetweenBoards = 2 * spacing;
+        exampleBoard.transform.localPosition = new Vector3((float)(-1 * (0.5 * boardWidth * (1 + exampleScale) + spacingBetweenBoards)), 0, 0);
+        transform.localPosition += new Vector3((float)(0.5 * (boardWidth * (exampleScale) + spacingBetweenBoards)), 0, 0);
     }
 }
