@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public Board targetBoard = null;
     public float timeBetweenExecution = 0.5f;
+    public Pointer pointer;
     public List<BlockData> LoadFunctionSlot()
     {
         List<BlockData> blocks = new List<BlockData>();
@@ -46,8 +47,56 @@ public class GameManager : MonoBehaviour
         List<BlockData> blocks = LoadSlot();
         for(int i = 0; i < blocks.Count; i++)
         {
-            targetBoard.slots[0].SetData(blocks[i]);
+            HandleBlock(blocks[i]);
             yield return new WaitForSeconds(timeBetweenExecution);
+        }
+        Debug.Log("Finished");
+    }
+
+    private void HandleBlock(BlockData blockData)
+    {
+        int index = pointer.GetIndex();
+        Debug.Log(blockData);
+        if (blockData.type == BlockData.Type.Directional)
+        {
+            int temp;
+            DirectionalBlockData direction = blockData as DirectionalBlockData;
+            if (direction.direction == DirectionalBlockData.Direction.Up)
+            {
+                temp = index + targetBoard.rows;
+                if (temp < targetBoard.slots.Count)
+                {
+                    pointer.SetIndex(temp);
+                }
+            }
+            else if (direction.direction == DirectionalBlockData.Direction.Down)
+            {
+                temp = index - targetBoard.rows;
+                if (temp >= 0)
+                {
+                    pointer.SetIndex(temp);
+                }
+            }
+            else if (direction.direction == DirectionalBlockData.Direction.Left)
+            {
+                if ((index + 1) % targetBoard.cols != 0)
+                {
+                    temp = index + 1;
+                    pointer.SetIndex(temp);
+                }
+            }
+            else
+            {
+                if (index % targetBoard.cols != 0)
+                {
+                    temp = index - 1;
+                    pointer.SetIndex(temp);
+                }
+            }
+        }
+        else
+        {
+            targetBoard.slots[index].SetData(blockData);
         }
     }
 

@@ -20,7 +20,6 @@ public class BlockBarItemList : MonoBehaviour
 
     public BlockBarItem[] items;
 
-
     public void Add(BlockData data)
     {
         for (int i = 0; i < items.Length; i++)

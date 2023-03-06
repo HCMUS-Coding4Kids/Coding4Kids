@@ -62,10 +62,14 @@ public class SideBarManager : MonoBehaviour
             targetHolder = funcBlockHolder;
             enterFunctionSlot = false;
         }
-        else
+        else if(enterSlot)
         {
             targetHolder = blockHolder;
             enterSlot = false;
+        }
+        else
+        {
+            return;
         }
 
         GameObject newCodeBlock = Instantiate(codeBlockPrefab, targetHolder);

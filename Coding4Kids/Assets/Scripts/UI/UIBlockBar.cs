@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIBlockBar : MonoBehaviour
 {
@@ -27,13 +28,25 @@ public class UIBlockBar : MonoBehaviour
         int index = 0;
         foreach (BlockBarItem item in BlockBarItemList.Instance.items)
         {
+            
             GameObject newBlock = Instantiate(blockPrefab);
             newBlock.transform.SetParent(blockBar.transform);
             newBlock.transform.localScale = Vector3.one;
             UIBlock uiBlock = newBlock.GetComponent<UIBlock>();
             uiBlock.Init(item.blockData, index);
+            if (BlockBarManager.Instance.unlimitedUse)
+            {
+                item.count = 999;
+                uiBlock.countText.transform.parent.gameObject.SetActive(false);
+            }
             index++;
             blocks.Add(uiBlock);
+        }
+        GridLayoutGroup grid = blockBar.GetComponent<GridLayoutGroup>();
+        RectTransform rect = blockBar.GetComponent<RectTransform>();
+        if(grid.constraintCount == 2)
+        {
+            rect.localScale = Vector3.one / 1.5f;
         }
         UpdateBar();
     }

@@ -23,7 +23,6 @@ public class ColorBlock : BoardBlock
 
     public override void UpdateBlock()
     {
-        Debug.Log("index");
         if (blockData == null || blockData.type != BlockData.Type.Color)
         {
             spriteRenderer.color = nullColor;

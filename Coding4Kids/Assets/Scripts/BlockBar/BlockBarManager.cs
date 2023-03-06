@@ -17,4 +17,6 @@ public class BlockBarManager : MonoBehaviour
             Instance = this;
         }
     }
+
+    public bool unlimitedUse = false;
 }
