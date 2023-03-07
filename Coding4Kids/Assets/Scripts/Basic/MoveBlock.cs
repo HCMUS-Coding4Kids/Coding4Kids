@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveBlock : CodingBlock
 {
-    public GameObject square;
+    public Bunny square;
     public int dir;
     //private void Start()
     //{
@@ -12,15 +12,90 @@ public class MoveBlock : CodingBlock
     //}
     public override void Active()
     {
-
-        if(dir==1)
-            square.transform.position += Vector3.right;
+        transform.parent = transform.root;
+        transform.SetSiblingIndex(1);
+        if (dir == 1)
+        {
+            square.transform.parent = square.list[square.parentId+1].transform;
+            square.parentId += 1;
+        }
         if(dir==-1)
-            square.transform.position += Vector3.left;
+        {
+            square.transform.parent = square.list[square.parentId - 1].transform;
+            square.parentId -= 1;
+        }
         if (dir == 2)
-            square.transform.position += Vector3.up;
+        {
+            square.transform.parent = square.list[square.parentId -5].transform;
+            square.parentId -=5;
+        }
         if (dir == -2)
-            square.transform.position += Vector3.down;
+        {
+            square.transform.parent = square.list[square.parentId + 5].transform;
+            square.parentId += 5;
+        }
+        if (dir == 3)
+        {
+            square.transform.parent = square.list[square.parentId + 1].transform;
+            square.parentId += 1;
+            square.transform.parent = square.list[square.parentId - 5].transform;
+            square.parentId -= 5;
+        }
+        if (dir == -3)
+        {
+            square.transform.parent = square.list[square.parentId + 1].transform;
+            square.parentId += 1;
+            square.transform.parent = square.list[square.parentId + 5].transform;
+            square.parentId += 5;
+        }
+        if (dir == 4)
+        {
+            square.transform.parent = square.list[square.parentId - 1].transform;
+            square.parentId -= 1;
+            square.transform.parent = square.list[square.parentId - 5].transform;
+            square.parentId -= 5;
+        }
+        if (dir == -4)
+        {
+            square.transform.parent = square.list[square.parentId - 1].transform;
+            square.parentId -= 1;
+            square.transform.parent = square.list[square.parentId + 5].transform;
+            square.parentId += 5;
+        }
+        if (dir == 5)
+        {
+            square.transform.parent = square.list[square.parentId - 5].transform;
+            square.parentId -= 5;
+            square.transform.parent = square.list[square.parentId + 1].transform;
+            
+            square.parentId += 1;
+        }
+        if (dir == -5)
+        {
+            square.transform.parent = square.list[square.parentId - 5].transform;
+            square.parentId -= 5;
+            square.transform.parent = square.list[square.parentId - 1].transform;
+            
+            square.parentId -= 1;
+        }
+        if (dir == 6)
+        {
+            square.transform.parent = square.list[square.parentId + 5].transform;
+            square.parentId += 5;
+            square.transform.parent = square.list[square.parentId + 1].transform;
+
+            square.parentId += 1;
+        }
+        if (dir == -6)
+        {
+            square.transform.parent = square.list[square.parentId + 5].transform;
+            square.parentId += 5;
+            square.transform.parent = square.list[square.parentId - 1].transform;
+
+            square.parentId -= 1;
+        }
         isFinish = true;
+        
     }
 }
+

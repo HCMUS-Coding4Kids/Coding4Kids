@@ -14,13 +14,14 @@ public class CodingBlock: MonoBehaviour, IBeginDragHandler, IDragHandler,IEndDra
     RectTransform rect;
     public virtual void Active()
     {
-
+        
     }
     private void Start()
     {
         parent = transform.parent;
         index = transform.parent.GetSiblingIndex() - 1;
     }
+
     public CodingBlock[] GetChild()
     {
         CodingBlock[] temp=new CodingBlock[transform.childCount];
