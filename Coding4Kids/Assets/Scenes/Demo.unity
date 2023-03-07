@@ -1356,12 +1356,12 @@ MonoBehaviour:
   sideBar: {fileID: 676214738}
   blockSlot: {fileID: 7454035553028832317, guid: ce1ba25459ab4ac4a87121df05cf1f02, type: 3}
   defaultData: {fileID: 0}
-  rows: 5
-  cols: 5
+  rows: 2
+  cols: 2
   spacing: 0.2
   useExampleBoard: 1
   exampleBoard: {fileID: 977517388}
-  exampleScale: 0.5
+  exampleScale: 0.75
   slots: []
   exampleSlots: []
   background: {fileID: 388987227}

@@ -17,4 +17,4 @@ MonoBehaviour:
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   type: 2
   color: 3
-  colorPalete: {r: 0, g: 1, b: 0.31886816, a: 1}
+  colorPalete: {r: 0.49803922, g: 0.7294118, b: 0, a: 1}

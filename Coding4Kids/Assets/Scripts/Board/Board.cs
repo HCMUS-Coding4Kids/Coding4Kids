@@ -129,7 +129,7 @@ public class Board : MonoBehaviour
 
         exampleBoard.transform.localScale = Vector3.one * exampleScale;
         float boardWidth = cols + (cols - 1) * spacing;
-        float spacingBetweenBoards = 2 * spacing;
+        float spacingBetweenBoards = exampleScale * 4 * spacing;
         exampleBoard.transform.localPosition = new Vector3((float)(-1 * (0.5 * boardWidth * (1 + exampleScale) + spacingBetweenBoards)), 0, 0);
         transform.localPosition += new Vector3((float)(0.5 * (boardWidth * (exampleScale) + spacingBetweenBoards)), 0, 0);
     }
