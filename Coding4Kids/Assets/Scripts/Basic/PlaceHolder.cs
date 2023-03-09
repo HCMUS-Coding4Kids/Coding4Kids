@@ -26,10 +26,14 @@ public class PlaceHolder : MonoBehaviour, IDropHandler
             StartCoroutine(wait());
         }
     }
-    public void Active()
+    public CodingBlock GetChild()
     {
-        CodingBlock child = transform.GetChild(0).GetComponent<CodingBlock>();
-        child.Active();
+        if(isActive)
+        {
+            CodingBlock child = transform.GetChild(0).GetComponent<CodingBlock>();
+            return child;
+        }
+        return null;
     }
     IEnumerator wait()
     {

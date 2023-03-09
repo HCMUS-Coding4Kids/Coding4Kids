@@ -9,12 +9,14 @@ public class Bunny : MonoBehaviour
     public int parentId;
     public Animator aniBunny;
     public static Bunny bunny;
+    public GameObject WinPopup;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(wait());
         bunny = this;
         aniBunny = GetComponent<Animator>();
+        WinPopup.SetActive(false);
     }
     IEnumerator wait()
     {
@@ -32,7 +34,13 @@ public class Bunny : MonoBehaviour
         {
             aniBunny.SetBool("getCarrot", true);
             transform.parent.GetChild(0).gameObject.SetActive(false);
+            StartCoroutine(winWait());
         }
         return transform.parent.GetComponent<PlaceHolder>().isActive;
+    }
+    IEnumerator winWait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        WinPopup.SetActive(true);
     }
 }

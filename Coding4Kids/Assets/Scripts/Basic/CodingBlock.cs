@@ -16,6 +16,10 @@ public class CodingBlock: MonoBehaviour, IBeginDragHandler, IDragHandler,IEndDra
     {
         
     }
+    public virtual void Retract()
+    {
+
+    }
     private void Start()
     {
         parent = transform.parent;

@@ -5,12 +5,15 @@ using UnityEngine;
 public class RunCodeBlock : MonoBehaviour
 {
     public List<PlaceHolder> holder;
+    public List<CodingBlock> list;
+    public static RunCodeBlock runCodeBlock;
     // Start is called before the first frame update
     void Start()
     {
-        foreach (PlaceHolder i in holder)
+        runCodeBlock = this;
+        for(int i =0; i<holder.Count;i++)
         {
-            i.isActive = true;
+            holder[i].isActive = true;
         }    
     }
 
@@ -22,17 +25,30 @@ public class RunCodeBlock : MonoBehaviour
         }
     }
 
+    public void StartButton()
+    {
+        for (int i = 0; i < holder.Count; i++)
+        {
+            list.Add(holder[i].GetChild());
+            list[i].Retract();
+        }
+        StartCoroutine(Active());
+    }
+
     IEnumerator Active()
     {
         Bunny.bunny.aniBunny.SetBool("walk", true);
-        for(int i=0; i<holder.Count;i++)
+        
+        for (int i =0; i<list.Count;i++)
         {
-            holder[i].Active();
+            list[i].Active();
+            list.Remove(list[i]);
+            i--;
             if (!Bunny.bunny.CheckStep())
             {
                 StopAllCoroutines();
             }
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1f);
         }
     }
 }
