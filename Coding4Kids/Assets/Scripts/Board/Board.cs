@@ -133,4 +133,17 @@ public class Board : MonoBehaviour
         exampleBoard.transform.localPosition = new Vector3((float)(-1 * (0.5 * boardWidth * (1 + exampleScale) + spacingBetweenBoards)), 0, 0);
         transform.localPosition += new Vector3((float)(0.5 * (boardWidth * (exampleScale) + spacingBetweenBoards)), 0, 0);
     }
+
+    public void SetData(int index, BlockData data)
+    {
+        slots[index].SetData(data);
+    }
+
+    public void Swap(int source, int target)
+    {
+        if(source == target || source >= slots.Count || target >= slots.Count || source == -1 || target == -1) return;
+        BlockData temp = slots[source].blockData;
+        slots[source].blockData = slots[target].blockData;
+        slots[target].blockData = temp;
+    }
 }

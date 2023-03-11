@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class DraggableBlock : BoardBlock
 {
-    bool isActive = false;
-
     [Header("Graphic Elements")]
-    GameObject active;
-    GameObject image;
-    GameObject blur;
+    public GameObject active;
+    public GameObject image;
+    public GameObject blur;
 
     //BlockData originalData = null;
     bool isBlurred = true;
@@ -18,12 +16,6 @@ public class DraggableBlock : BoardBlock
     bool isDragging = false;
 
     GameObject temp = null;
-
-    private void Start()
-    {
-        Toggle(false);
-        SetBlur(false);
-    }
 
     private void Update()
     {
@@ -35,28 +27,14 @@ public class DraggableBlock : BoardBlock
 
     public void OnMouseEnter()
     {
-        if(GameManager.isDragging)
-        {
-            DraggableBoard.Instance.SetTarget(index);
-            /*blockData = BoardManager.draggingData;
-            if (!isBlurred)
-            {
-                SetBlur(true);
-            }*/
-        }    
+        DragManager.Instance.dragInto = DragManager.DragInto.Block;
+        DragManager.Instance.targetIndex = index;
     }
 
     public void OnMouseExit()
     {
-        if (GameManager.isDragging)
-        {
-            DraggableBoard.Instance.SetTarget(-1);
-            /*blockData = originalData;
-            if (isBlurred)
-            {
-                SetBlur(false);
-            }*/
-        }
+        DragManager.Instance.dragInto = DragManager.DragInto.None;
+        DragManager.Instance.targetIndex = -1;
     }
 
     public void SetBlur(bool value)
@@ -67,7 +45,6 @@ public class DraggableBlock : BoardBlock
 
     public void OnMouseDown()
     {
-        Toggle(false);
         currentTime = Time.time;
     }
 
@@ -84,11 +61,8 @@ public class DraggableBlock : BoardBlock
         else if (isDragging)
         {
             isDragging = false;
-            if(!DraggableBoard.Instance.Swap())
-            {
-                Toggle(true);
-            }
-            Destroy(temp);
+            SetBlur(false);
+            DragManager.Instance.HandleDrop();
         }
     }
 
@@ -96,47 +70,41 @@ public class DraggableBlock : BoardBlock
     {
         float interval = Time.time - currentTime;
 
-        if(!isDragging && interval > 0.1f && isActive)
+        if(!isDragging && interval > 0.1f && blockData != null)
         {
+            SetBlur(true);
+            isDragging = true;
             temp = new GameObject();
             GameObject tempActive = Instantiate(active, temp.transform);
             GameObject tempImage = Instantiate(image, temp.transform);
             tempActive.GetComponent<SpriteRenderer>().sortingOrder += 10;
             tempImage.GetComponent<SpriteRenderer>().sortingOrder += 10;
-            Toggle(false);
-            isDragging = true;
-            DraggableBoard.Instance.StartDragging(index);
+            DragManager.Instance.StartDragging(temp, index, blockData, DragManager.Source.Block);
+            DragManager.Instance.OnDrag();
+            Destroy(temp);
         }
-        if (temp != null)
+        else
         {
-            temp.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10f);
+            DragManager.Instance.OnDrag();
         }
-    }
-
-
-    public override void Toggle(bool value)
-    {
-        isActive = value;
-        active.SetActive(value);
-        image.SetActive(value);
     }
 
     public override void UpdateBlock()
     {
         if (blockData != null)
         {
-            Toggle(true);
+            SetBlur(false);
             image.GetComponent<SpriteRenderer>().sprite = blockData.thumbnail;
         }
         else
         {
-            Toggle(false);
+            SetBlur(true);
+            image.GetComponent<SpriteRenderer>().sprite = null;
         }
     }
 
     public override void SetData(BlockData data)
     {
         blockData = data;
-        UpdateBlock();
     }    
 }

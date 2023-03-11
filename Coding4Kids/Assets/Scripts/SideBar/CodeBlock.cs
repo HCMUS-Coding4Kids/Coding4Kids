@@ -44,7 +44,6 @@ public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandle
         highlight.gameObject.SetActive(value);
     }
 
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         SideBarManager.targetIndex = transform.GetSiblingIndex();

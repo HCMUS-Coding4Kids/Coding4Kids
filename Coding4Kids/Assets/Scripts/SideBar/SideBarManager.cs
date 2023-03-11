@@ -57,19 +57,13 @@ public class SideBarManager : MonoBehaviour
     public void Add(BlockData data)
     {
         Transform targetHolder = null;
-        if (enterFunctionSlot)
+        if (DragManager.Instance.dragInto == DragManager.DragInto.Function)
         {
             targetHolder = funcBlockHolder;
-            enterFunctionSlot = false;
-        }
-        else if(enterSlot)
-        {
-            targetHolder = blockHolder;
-            enterSlot = false;
         }
         else
         {
-            return;
+            targetHolder = blockHolder;
         }
 
         GameObject newCodeBlock = Instantiate(codeBlockPrefab, targetHolder);
@@ -86,6 +80,4 @@ public class SideBarManager : MonoBehaviour
         }
         newCodeBlock.GetComponent<CodeBlock>().parent = (targetHolder == funcBlockHolder) ? CodeBlock.Parent.Function : CodeBlock.Parent.None;
     }
-
-    
 }

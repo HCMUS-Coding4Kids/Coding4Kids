@@ -20,7 +20,7 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     bool isAvailable = false;
 
-    GameObject tempBlock = null;
+    //GameObject tempBlock = null;
 
     public void UpdateBlock(int count)
     {
@@ -62,24 +62,18 @@ public class UIBlock : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             eventData.pointerDrag = null;
             return;
         }
-        GameManager.isDragging = true;
-        DraggableBoard.draggingData = blockData;
-        tempBlock = Instantiate(available, transform.parent.transform.parent);
-        Canvas canvas = tempBlock.transform.AddComponent<Canvas>();
-        canvas.overrideSorting = true;
-        canvas.sortingOrder = 100;
+        DragManager.Instance.StartDragging(available, blockData, DragManager.Source.BlockBar);
+        DragManager.Instance.OnDrag();
         BlockBarItemList.Instance.Remove(blockData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Destroy(tempBlock);
-        GameManager.isDragging = false;
-        SideBarManager.Instance.Add(blockData);
+        DragManager.Instance.HandleDrop();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        tempBlock.transform.position = Input.mousePosition;
+        DragManager.Instance.OnDrag();
     }
 }

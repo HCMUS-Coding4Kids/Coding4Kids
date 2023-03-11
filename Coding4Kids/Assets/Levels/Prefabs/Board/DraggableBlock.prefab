@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 689881956102904797}
   - component: {fileID: -7861706189573189986}
   m_Layer: 0
-  m_Name: BoardSlot
+  m_Name: DraggableBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

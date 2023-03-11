@@ -25,11 +25,11 @@ public class FunctionSlotManager : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SideBarManager.Instance.SetEnterFunction(true);
+        DragManager.Instance.dragInto = DragManager.DragInto.Function;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-         SideBarManager.Instance.SetEnterFunction(false);
+        DragManager.Instance.dragInto = DragManager.DragInto.None;
     }
 }

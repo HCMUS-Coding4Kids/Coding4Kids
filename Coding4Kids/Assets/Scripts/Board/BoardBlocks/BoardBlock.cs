@@ -6,7 +6,7 @@ public class BoardBlock : MonoBehaviour
 {
     public int index;
 
-    bool isActive = false;
+    protected bool isActive = false;
     public BlockData blockData;
 
     private void Start()

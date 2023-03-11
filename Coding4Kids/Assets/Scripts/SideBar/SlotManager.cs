@@ -34,11 +34,11 @@ public class SlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SideBarManager.Instance.SetEnterSlot(true);
+        DragManager.Instance.dragInto = DragManager.DragInto.Slot;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        SideBarManager.Instance.SetEnterSlot(false);
+        DragManager.Instance.dragInto = DragManager.DragInto.None;
     }
 }

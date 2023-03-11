@@ -10,7 +10,23 @@ public class GameManager : MonoBehaviour
 
     public Board targetBoard = null;
     public float timeBetweenExecution = 0.5f;
+
     public Pointer pointer;
+
+    public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     public List<BlockData> LoadFunctionSlot()
     {
         List<BlockData> blocks = new List<BlockData>();
