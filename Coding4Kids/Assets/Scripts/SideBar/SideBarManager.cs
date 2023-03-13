@@ -27,6 +27,7 @@ public class SideBarManager : MonoBehaviour
     public static bool isSwapping = false;
     public Transform blockHolder = null;
     public GameObject codeBlockPrefab = null;
+    public GameObject loopBlockPrefab = null;
     public static int targetIndex = -1;
 
     [Header("Function Slot")]
@@ -54,7 +55,7 @@ public class SideBarManager : MonoBehaviour
         return enterFunctionSlot;
     }
 
-    public void Add(BlockData data)
+    public GameObject Add(BlockData data)
     {
         Transform targetHolder = null;
         if (DragManager.Instance.dragInto == DragManager.DragInto.Function)
@@ -66,9 +67,23 @@ public class SideBarManager : MonoBehaviour
             targetHolder = blockHolder;
         }
 
-        GameObject newCodeBlock = Instantiate(codeBlockPrefab, targetHolder);
+        GameObject blockPrefab= null;
+        if (data.type != BlockData.Type.LoopStart)
+        {
+            blockPrefab = codeBlockPrefab;
+        }
+        else
+        {
+            blockPrefab = loopBlockPrefab;
+        }
+
+        GameObject newCodeBlock = Instantiate(blockPrefab, targetHolder);
         newCodeBlock.GetComponent<CodeBlock>().blockData = data;
         newCodeBlock.GetComponent<CodeBlock>().background.color = data.backgroundColor;
+        if(data.thumbnail == null)
+        {
+            newCodeBlock.GetComponent<CodeBlock>().image.gameObject.SetActive(false);
+        }
         if(data.type == BlockData.Type.Color)
         {
             ColorBlockData colorBlockData = (ColorBlockData) data;
@@ -79,5 +94,13 @@ public class SideBarManager : MonoBehaviour
             newCodeBlock.transform.SetSiblingIndex(targetIndex);
         }
         newCodeBlock.GetComponent<CodeBlock>().parent = (targetHolder == funcBlockHolder) ? CodeBlock.Parent.Function : CodeBlock.Parent.None;
+        if(data.type == BlockData.Type.LoopStart)
+        {
+            LoopBlockData loopBlockData = (LoopBlockData) data;
+            GameObject loopEndBlock = Add(loopBlockData.loopEnd);
+            newCodeBlock.GetComponent<LoopBlock>().loopEnd = loopEndBlock;
+        }
+
+        return newCodeBlock;
     }
 }

@@ -18,7 +18,7 @@ public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandle
     public Image highlight;
     public Image background;
 
-    float currentTime = 0f;
+    protected float currentTime = 0f;
     Vector3 originalPosition;
     Canvas canvas = null;
 
@@ -56,24 +56,27 @@ public class CodeBlock : MonoBehaviour, IPointerEnterHandler, IPointerDownHandle
         ToggleHighlight(false);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         currentTime = Time.time;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public virtual void OnPointerUp(PointerEventData eventData)
     {
         float interval = Time.time - currentTime;
         if (interval < 0.1f)
         {
-            BlockBarItemList.Instance.Add(blockData);
-            Destroy(gameObject);
+            if (blockData.type != BlockData.Type.LoopEnd)
+            {
+                BlockBarItemList.Instance.Add(blockData);
+                Destroy(gameObject);
+            }
         }
         else
         {
             transform.SetSiblingIndex(SideBarManager.targetIndex);
-            SideBarManager.targetIndex = -1;
         }
+        SideBarManager.targetIndex = -1;
     }
 
     public void OnDrag(PointerEventData eventData)

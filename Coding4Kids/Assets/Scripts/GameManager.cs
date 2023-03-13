@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -33,7 +34,17 @@ public class GameManager : MonoBehaviour
         Transform functionSlot = SideBarManager.Instance.funcBlockHolder.gameObject.transform;
         for(int i = 0; i < functionSlot.childCount; i++)
         {
-            blocks.Add(functionSlot.GetChild(i).GetComponent<CodeBlock>().blockData);
+            BlockData block = functionSlot.GetChild(i).GetComponent<CodeBlock>().blockData;
+            if (block.type == BlockData.Type.LoopStart)
+            {
+                blocks.AddRange(LoadLoop(functionSlot.GetChild(i)));
+                LoopBlock loopBlock = functionSlot.GetChild(i).GetComponent<LoopBlock>();
+                i = loopBlock.loopEnd.transform.GetSiblingIndex();
+            }
+            else
+            {
+                blocks.Add(block);
+            }
         }
         return blocks;
     }
@@ -49,12 +60,46 @@ public class GameManager : MonoBehaviour
             if(block.type == BlockData.Type.Function)
             {
                 blocks.AddRange(functionBlocks);
+            } else if (block.type == BlockData.Type.LoopStart)
+            {
+                blocks.AddRange(LoadLoop(slot.GetChild(i)));
+                LoopBlock loopBlock = slot.GetChild(i).GetComponent<LoopBlock>();
+                i = loopBlock.loopEnd.transform.GetSiblingIndex();
             }
             else
             {
                 blocks.Add(block);
             }
         }
+        return blocks;
+    }
+
+    public List<BlockData> LoadLoop(Transform loopStart)
+    {
+        List<BlockData> functionBlocks = LoadFunctionSlot();
+        LoopBlock loopData = loopStart.GetComponent<LoopBlock>();
+        List<BlockData> blocks = new List<BlockData>();
+        
+        List<BlockData> tempBlocks = new List<BlockData>();
+
+        for(int i = loopStart.GetSiblingIndex() + 1; i < loopData.loopEnd.transform.GetSiblingIndex(); i++)
+        {
+            BlockData tempData = loopStart.transform.parent.GetChild(i).GetComponent<CodeBlock>().blockData;
+            if (tempData.type == BlockData.Type.Function)
+            {
+                tempBlocks.AddRange(functionBlocks);
+            }
+            else
+            {
+                tempBlocks.Add(tempData);
+            }
+        }
+
+        for(int i = 0; i < loopData.times; i++)
+        {
+            blocks.AddRange(tempBlocks);
+        }
+
         return blocks;
     }
 

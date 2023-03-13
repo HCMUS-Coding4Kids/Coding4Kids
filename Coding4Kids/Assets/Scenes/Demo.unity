@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDragging: 0
   draggingData: {fileID: 0}
-  targetBoard: {fileID: 0}
+  targetBoard: {fileID: 1031272696}
   source: 0
   dragInto: 0
   sourceIndex: 0
@@ -1021,7 +1021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &527912497
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c52837758f3084c869d8482ebffd6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetBoard: {fileID: 527912499}
+  targetBoard: {fileID: 1031272696}
   timeBetweenExecution: 1
   pointer: {fileID: 725778304}
 --- !u!1 &676214738
@@ -1302,7 +1302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &725778302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1560,7 +1560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1031272693
 Transform:
   m_ObjectHideFlags: 0
@@ -1644,7 +1644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomBar: {fileID: 111717883}
   sideBar: {fileID: 676214738}
-  blockSlot: {fileID: 7454035553028832317, guid: 33ded10eed7b1f44dbb4ecdad308796f, type: 3}
+  blockSlot: {fileID: 7454035553028832317, guid: ce1ba25459ab4ac4a87121df05cf1f02, type: 3}
   defaultData: {fileID: 0}
   rows: 5
   cols: 5
@@ -3044,6 +3044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockHolder: {fileID: 1222777900}
   codeBlockPrefab: {fileID: 801473397410585580, guid: e73e4d40e7e2a4446af2b87d1c7e3a6e, type: 3}
+  loopBlockPrefab: {fileID: 171940519332278812, guid: cf578b0ebb200394a93929c70c54aab5, type: 3}
   hasFunction: 1
   function: {fileID: 966532158}
   funcBlockHolder: {fileID: 1265640745}
@@ -3110,6 +3111,8 @@ MonoBehaviour:
   - blockData: {fileID: 11400000, guid: 50e2c2565991fd34cb1519825a7f2bab, type: 2}
     count: 10
   - blockData: {fileID: 11400000, guid: 1a25bdfcb214b80498ad88723f261edd, type: 2}
+    count: 10
+  - blockData: {fileID: 11400000, guid: 8ea71fd3a31903745b38f4e1a9638e51, type: 2}
     count: 10
 --- !u!114 &2139325143
 MonoBehaviour:

@@ -11,7 +11,7 @@ public class BlockData : ScriptableObject
     public Color backgroundColor;
     public enum Type
     {
-        None, Directional, Color, Function
+        None, Directional, Color, Function, LoopStart, LoopEnd
     }
 
     public Type type;

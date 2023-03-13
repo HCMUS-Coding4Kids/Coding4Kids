@@ -29,7 +29,7 @@ public class DragManager : MonoBehaviour
 
     public enum DragInto
     {
-        None, Block, Slot, Function
+        None, Block, Slot, Function, LoopCount
     }
     public Board targetBoard;
     public Source source;
@@ -70,7 +70,6 @@ public class DragManager : MonoBehaviour
     {
         isDragging = true;
         draggedObject = Instantiate(gameObject, gameObject.transform.parent.transform.parent.transform.parent);
-        Debug.Log(draggedObject.transform.localScale);
         draggedObject.transform.AddComponent<CanvasRenderer>();
         this.source = source;
         Canvas canvas = draggedObject.transform.AddComponent<Canvas>();
