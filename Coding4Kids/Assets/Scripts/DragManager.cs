@@ -58,7 +58,11 @@ public class DragManager : MonoBehaviour
             {
                 targetBoard.SetData(targetIndex, draggingData);
             }
-        } 
+            if (dragInto == DragInto.None)
+            {
+                BlockBarItemList.Instance.Add(draggingData);
+            }
+        }
         else if (source == Source.Block)
         {
             targetBoard.Swap(sourceIndex, targetIndex);
